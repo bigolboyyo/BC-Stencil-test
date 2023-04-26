@@ -73,7 +73,16 @@
     max-height: 100%;
     object-fit: contain;
     width: 100%;
+    position: relative
 }
+
+// Should probably not mutate these files
+// Create individual files and import?
+
+// .card-image-secondary {
+//     @include lazy-loaded-img;
+//      ... 
+// }
 
 .card-title {
     font-size: $card-title-fontSize;

@@ -44,7 +44,7 @@ export default class Category extends CatalogPage {
         }
 
         $('a.reset-btn').on('click', () => this.setLiveRegionsAttributes($('span.reset-message'), 'status', 'polite'));
-
+        
         this.ariaNotifyNoProducts();
     }
 

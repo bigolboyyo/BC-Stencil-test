@@ -77,3 +77,31 @@
 // -----------------------------------------------------------------------------
 
 @import "layouts/layouts"; // 1
+
+// Main styling here
+// Import all css files into this?
+
+.card-image-secondary {
+    @include lazy-loaded-img;
+    opacity: 0;
+    border: 0;
+    /* Object-fit polyfill */
+    font-family: "object-fit: contain;";
+    max-height: 100%;
+    object-fit: contain;
+    width: 100%;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card-image-secondary:hover  {
+    opacity: 1;
+}
+
+.card-img-container::after {
+    padding-bottom: 0;
+}

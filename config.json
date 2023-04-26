@@ -38,11 +38,7 @@
   },
   "css_compiler": "scss",
   "autoprefixer_cascade": true,
-  "autoprefixer_browsers": [
-    "> 1%",
-    "last 2 versions",
-    "Firefox ESR"
-  ],
+  "autoprefixer_browsers": ["> 1%", "last 2 versions", "Firefox ESR"],
   "settings": {
     "hide_breadcrumbs": false,
     "hide_page_heading": false,
@@ -341,11 +337,7 @@
       "unionpay",
       "visa"
     ],
-    "supported_payment_methods": [
-      "card",
-      "paypal",
-      "bank"
-    ],
+    "supported_payment_methods": ["card", "paypal", "bank"],
     "lazyload_mode": "lazyload+lqip",
     "checkout-paymentbuttons-paypal-color": "black",
     "checkout-paymentbuttons-paypal-shape": "rect",
@@ -390,9 +382,7 @@
           "sales_discounts",
           "large_catalog"
         ],
-        "industries": [
-          "home_garden"
-        ]
+        "industries": ["home_garden"]
       },
       "images": {},
       "settings": {}
@@ -411,9 +401,7 @@
           "sales_discounts",
           "large_catalog"
         ],
-        "industries": [
-          "fashion_jewelry"
-        ]
+        "industries": ["fashion_jewelry"]
       },
       "settings": {
         "homepage_featured_products_count": 6,
@@ -623,9 +611,7 @@
           "sales_discounts",
           "large_catalog"
         ],
-        "industries": [
-          "food_beverage"
-        ]
+        "industries": ["food_beverage"]
       },
       "settings": {
         "body-font": "Google_Roboto_400",
