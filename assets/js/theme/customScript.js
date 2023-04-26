@@ -61,11 +61,14 @@ const getCart = async () => {
 
   const carts = await storefrontCall(endpoint);
   if (carts && carts.length > 0) {
-    return carts[0];
+    const cart = carts[0];
+    const hasLineItems = cart.line_items && cart.line_items.physical_items && cart.line_items.physical_items.length > 0;
+    return { cart, hasLineItems };
   }
 
   return null;
 };
+
 
 
 const getBackendCart = async (category) => {
@@ -106,28 +109,31 @@ const addProductsToCart = async (cartObject) => {
   }
   
   window.location.reload()
-  // Need to deep dive the utils
-  // Having trouble grabbing page info
-
-  // console.log(stencilUtils);
-  // const updatedCart = await stencilUtils.api.cart.getCart();
-
-  // if (cart) {
-  //   window.stencilUtils.api.cart.refreshContent((err, updatedCart) => {
-  //     if (err) {
-  //       console.error('Error refreshing cart:', err);
-  //     } else {
-  //       console.log('Cart refreshed:', updatedCart);
-  //     }
-  //   });
-  // }
- 
+  
+  const removeAllButton = document.getElementById("remove-all-from-cart");
+  removeAllButton.style.display = cart && cart.hasLineItems ? "block" : "none";
 };
+
+// Need to deep dive the utils
+// Having trouble grabbing page info
+
+// console.log(stencilUtils);
+// const updatedCart = await stencilUtils.api.cart.getCart();
+
+// if (cart) {
+//   window.stencilUtils.api.cart.refreshContent((err, updatedCart) => {
+//     if (err) {
+//       console.error('Error refreshing cart:', err);
+//     } else {
+//       console.log('Cart refreshed:', updatedCart);
+//     }
+//   });
+// }
 
 const removeItemsFromCart = async (cart, cartItemIdsForRemoval) => {
   const removalPromises = cartItemIdsForRemoval.map((itemId) => {
     const endpoint = {
-      route: `/carts/${cart.id}/items/${itemId}`,
+      route: `/carts/${cart.cart.id}/items/${itemId}`,
       method: "DELETE",
       accept: "application/json",
       success: 204,
@@ -162,14 +168,38 @@ addAllButton.addEventListener("click", async () => {
 const removeAllButton = document.getElementById("remove-all-from-cart");
 
 const formatCartItemsForRemoval = (cart, specialItemIds) => {
-  return cart.lineItems.physicalItems
+  return cart.cart.lineItems.physicalItems
     .filter(item => specialItemIds.includes(item.productId))
     .map(item => item.id);
 };
 
+const showRemoveAllButton = async () => {
+  const cart = await getCart();
+  console.log("Cart:", cart);
+  if (cart) {
+    console.log("Cart has items");
+    removeAllButton.style.display = "unset";
+  } else {
+    console.log("Cart is empty");
+    removeAllButton.style.display = "none";
+  }
+};
+
+
+showRemoveAllButton();
+
+addAllButton.addEventListener("click", async () => {
+  const cartObject = await getBackendCart("Special Items");
+  const formattedLineItems = formatLineItems(cartObject);
+  await addProductsToCart({ line_items: formattedLineItems });
+
+  alert("Special Items added to the cart.");
+  showRemoveAllButton(); 
+});
+
 removeAllButton.addEventListener("click", async () => {
   const cart = await getCart();
-  
+
   if (cart) {
     const specialItems = await getBackendCart("Special Items");
     const specialItemIds = specialItems.line_items.physical_items.map(
@@ -181,12 +211,16 @@ removeAllButton.addEventListener("click", async () => {
     );
 
     await removeItemsFromCart(cart, cartItemIdsForRemoval);
-    window.location.reload()
+
     alert("Special Items removed from the cart.");
+    showRemoveAllButton(); 
+    window.location.reload()
   } else {
     alert("No items in the cart.");
   }
 });
+
+
 
 
 
