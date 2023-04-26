@@ -35,3 +35,7 @@ Thanks for checking out my progress so far!
 
 1. Add handlebars banner
 2. Implement Stencil Utils
+
+## Acknowledgements
+- This will currently only run locally (need express integration) JS SDK?
+- I'm a junior dev 
